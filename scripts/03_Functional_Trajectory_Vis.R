@@ -24,7 +24,7 @@ model_exp_log <- log2(exp_matrix + 1)
 model_nmf_expr <- t(model_exp_log) 
 model_nmf_expr <- as.data.frame(model_nmf_expr)
 
-# 1.2 Load Group Info & Locked NMF Clusters
+# 1.2 Load Group Info & NMF Clusters
 sample_info <- read.csv(file.path(data_dir, "sample_group.csv"))
 nmf_groups <- read.csv(file.path(data_dir, "NMF_cluster.csv"), row.names = 1)
 # Ensure consistent row names
@@ -214,3 +214,4 @@ for (met in selected_panel) {
 }
 
 message("Script 03 Completed Successfully.")
+
