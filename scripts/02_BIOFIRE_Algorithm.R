@@ -1,6 +1,5 @@
 # ==============================================================================
 # Script 02: BIO-FIRE Algorithm Implementation
-# ==============================================================================
 
 library(NMF)
 library(Boruta)
@@ -14,25 +13,29 @@ set.seed(4028)
 # ==================== Step 1: NMF Functional Module Identification ====================
 # Load normalized data
 nmf_input <- read.table(file.path(data_dir, "model_data_norm.txt"), header = TRUE, sep = "\t")
-nmf_matrix <- as.matrix(nmf_input[, -which(names(nmf_input) == "group")]) 
+nmf_matrix <- as.matrix(nmf_input[, -which(names(nmf_input) == "group")]) # Remove group col
 
-# Run NMF
-cat("Running NMF factorization...\n")
+# Run NMF (Rank=5 based on prior optimization)
+# Note: nrun reduced to 10 for demo; use nrun=100 for full reproduction
 nmf_res <- nmf(nmf_matrix, rank = 5, method = "brunet", nrun = 50, seed = 4028)
 
 # Extract features and clusters
+features <- extractFeatures(nmf_res, "max")
 nmf_clusters <- predict(nmf_res)
 cluster_df <- data.frame(Metabolite = names(nmf_clusters), Cluster = nmf_clusters)
 write.csv(cluster_df, file.path(out_dir, "02_NMF_Clusters.csv"), row.names = FALSE)
 
-# ==================== Step 2: Boruta Candidate Screening (Demonstration) ====================
+# Plot NMF Map
+pdf(file.path(out_dir, "02_NMF_Consensus_Map.pdf"))
+consensusmap(nmf_res)
+dev.off()
+
+# ==================== Step 2: Boruta Candidate Screening ====================
 cat("Running Boruta screening...\n")
 nmf_input$group <- as.factor(nmf_input$group)
 boruta_res <- Boruta(group ~ ., data = nmf_input, doTrace = 0, ntree = 500)
 
 # ==================== Step 3: Recursive Signature Optimization (Core) ====================
-# Load locked candidate list
-cat("Loading locked candidate list for recursive optimization...\n")
 candidates <- read.table(file.path(data_dir, "candidate.txt"), header = TRUE, sep = "\t")
 
 # Sort by Importance (High -> Low)
