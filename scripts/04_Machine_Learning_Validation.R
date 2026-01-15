@@ -21,7 +21,6 @@ groups_train <- read.table(file.path(data_dir, "model_group.txt"), header = TRUE
 groups_valid <- read.table(file.path(data_dir, "vali_group.txt"), header = TRUE, row.names = 1)
 
 # Load Selected Features (12 Markers)
-# Note: Assuming "12M.txt" contains the feature names as columns
 features_12 <- colnames(read.table(file.path(data_dir, "12M.txt"), header = TRUE))
 
 # Subset Data
@@ -83,5 +82,6 @@ pred_val <- predict(rf_model, data_valid, type = "prob")[, "GC"]
 roc_obj <- roc(data_valid$Class, pred_val)
 plot(roc_obj, main = paste("External Validation (AUC =", round(roc_obj$auc, 3), ")"), col = "blue")
 dev.off()
+
 
 message("ML Pipeline Completed.")
