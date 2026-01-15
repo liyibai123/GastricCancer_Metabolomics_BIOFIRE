@@ -8,7 +8,6 @@ This repository contains the R source code and analysis workflow for the manuscr
 The project is organized into three main directories:
 
 - **data/**: Contains processed input data required to reproduce the analysis.
-  - *Note: Raw mass spectrometry data (.mzML) are deposited in ProteomeXchange (ID: PXD071237).*
 - **scripts/**: Numbered R scripts corresponding to the analysis steps described in the manuscript.
 - **output/**: Directory where generated figures and tables will be saved.
 
@@ -47,4 +46,5 @@ The analysis was performed using **R version 4.4.2**. Please ensure the followin
 ```r
 install.packages(c("tidyverse", "caret", "pROC", "NMF", "Boruta", 
                    "randomForest", "gbm", "xgboost", "pheatmap", "eoffice",
+
                    "scatterplot3d", "MASS"))
