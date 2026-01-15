@@ -1,4 +1,4 @@
-# BIO-FIRE: Hybrid Metabolomics Framework for Gastric Cancer Diagnosis
+# Hybrid Metabolomics Framework for Gastric Cancer Diagnosis
 
 This repository contains the R source code and analysis workflow for the manuscript:
 **"Multi-phase hybrid metabolomics framework identifies clinically applicable plasma signatures for early detection of gastric cancer"**.
@@ -48,3 +48,4 @@ install.packages(c("tidyverse", "caret", "pROC", "NMF", "Boruta",
                    "randomForest", "gbm", "xgboost", "pheatmap", "eoffice",
 
                    "scatterplot3d", "MASS"))
+
