@@ -44,7 +44,6 @@ models <- list(
   GBM = list(method = "gbm", tuneGrid = expand.grid(n.trees = 100, interaction.depth = 3, shrinkage = 0.1, n.minobsinnode = 10)),
   SVM = list(method = "svmRadial", tuneGrid = expand.grid(C = 1, sigma = 0.221)),
   LR = list(method = "glm", tuneGrid = NULL)
-  # Add other models as needed...
 )
 
 results <- list()
@@ -75,7 +74,7 @@ for(alg in names(models)) {
 final_res <- do.call(rbind, results)
 write.csv(final_res, file.path(out_dir, "04_ML_Performance_Summary.csv"), row.names = FALSE)
 
-# Plot ROC for Best Model (e.g., RF) in Validation
+# Plot ROC for Best Model in Validation
 pdf(file.path(out_dir, "04_Validation_ROC_RF.pdf"), width = 5, height = 5)
 rf_model <- train(Class ~ ., data = training_set, method = "rf", trControl = ctrl)
 pred_val <- predict(rf_model, data_valid, type = "prob")[, "GC"]
@@ -85,3 +84,4 @@ dev.off()
 
 
 message("ML Pipeline Completed.")
+
